@@ -1,64 +1,80 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
-interface Column {
+interface Column<T> {
   header: string;
-  accessor: string;
-  align?: "left" | "right";
-  render?: (value: unknown) => React.ReactNode;
+  accessor: keyof T | ((row: T) => React.ReactNode);
+  className?: string;
 }
 
-interface CampaignTableProps {
-  title: string;
-  columns: Column[];
-  data: Record<string, unknown>[];
+interface CampaignTableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  loading?: boolean;
+  emptyMessage?: string;
 }
 
-export function CampaignTable({ title, columns, data }: CampaignTableProps) {
+export function CampaignTable<T extends { id?: string | number; name?: string }>({
+  columns,
+  data,
+  loading,
+  emptyMessage = "No campaigns found",
+}: CampaignTableProps<T>) {
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl border overflow-hidden">
+        <div className="p-4 space-y-3">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="h-12 bg-gray-100 rounded animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl border p-8 text-center">
+        <p className="text-[var(--color-muted-foreground)]">{emptyMessage}</p>
+      </div>
+    );
+  }
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b text-left text-muted-foreground">
-                {columns.map((col) => (
-                  <th
-                    key={col.accessor}
-                    className={`pb-3 pr-4 font-medium ${
-                      col.align === "right" ? "text-right" : ""
-                    }`}
-                  >
-                    {col.header}
-                  </th>
+    <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b bg-gray-50/50">
+              {columns.map((col, i) => (
+                <th
+                  key={i}
+                  className={cn(
+                    "px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--color-muted-foreground)]",
+                    col.className
+                  )}
+                >
+                  {col.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y">
+            {data.map((row, rowIdx) => (
+              <tr key={rowIdx} className="hover:bg-gray-50/50 transition-colors">
+                {columns.map((col, colIdx) => (
+                  <td key={colIdx} className={cn("px-4 py-3 text-sm", col.className)}>
+                    {typeof col.accessor === "function"
+                      ? col.accessor(row)
+                      : String(row[col.accessor] ?? "")}
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {data.map((row, i) => (
-                <tr key={i} className="border-b last:border-0">
-                  {columns.map((col) => (
-                    <td
-                      key={col.accessor}
-                      className={`py-3 pr-4 ${
-                        col.align === "right" ? "text-right" : ""
-                      }`}
-                    >
-                      {col.render
-                        ? col.render(row[col.accessor])
-                        : String(row[col.accessor] ?? "")}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }

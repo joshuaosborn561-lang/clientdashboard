@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  password      String
+  role          String   @default("client") // "admin" or "client"
+  companyName   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Platform credentials (per-client)
+  smartleadApiKey      String?
+  smartleadCampaignIds String? // comma-separated campaign IDs, empty = all
+
+  heyreachApiKey      String?
+  heyreachCampaignIds String? // comma-separated campaign IDs, empty = all
+
+  googleAdsCustomerId    String?
+  googleAdsCampaignIds   String? // comma-separated campaign IDs, empty = all
+}
