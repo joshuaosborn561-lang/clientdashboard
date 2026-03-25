@@ -1,19 +1,17 @@
 "use client";
 
-import { Mail, Network as Linkedin, BarChart3, Send, Eye, MessageSquare, MousePointerClick, DollarSign, Users } from "lucide-react";
+import { Mail, Network as Linkedin, Send, Eye, MessageSquare, Users } from "lucide-react";
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { PlatformSection } from "@/components/dashboard/platform-section";
 import { useSmartLeadCampaigns } from "@/hooks/use-smartlead";
 import { useHeyReachCampaigns } from "@/hooks/use-heyreach";
-import { useGoogleAdsCampaigns } from "@/hooks/use-google-ads";
-import { formatNumber, formatCurrency, formatPercent } from "@/lib/utils";
+import { formatNumber, formatPercent } from "@/lib/utils";
 
 export default function OverviewPage() {
   const smartlead = useSmartLeadCampaigns();
   const heyreach = useHeyReachCampaigns();
-  const googleAds = useGoogleAdsCampaigns();
 
-  const loading = smartlead.isLoading || heyreach.isLoading || googleAds.isLoading;
+  const loading = smartlead.isLoading || heyreach.isLoading;
 
   // Aggregate SmartLead metrics
   const slData = smartlead.data || [];
@@ -28,15 +26,8 @@ export default function OverviewPage() {
   const hrAccepted = hrData.reduce((sum, c) => sum + c.stats.connectionsAccepted, 0);
   const hrReplies = hrData.reduce((sum, c) => sum + c.stats.replies, 0);
 
-  // Aggregate Google Ads metrics
-  const gaData = googleAds.data || [];
-  const gaImpressions = gaData.reduce((sum, c) => sum + c.metrics.impressions, 0);
-  const gaClicks = gaData.reduce((sum, c) => sum + c.metrics.clicks, 0);
-  const gaCost = gaData.reduce((sum, c) => sum + c.metrics.cost, 0);
-  const gaConversions = gaData.reduce((sum, c) => sum + c.metrics.conversions, 0);
-
   // Totals
-  const totalCampaigns = slData.length + hrData.length + gaData.length;
+  const totalCampaigns = slData.length + hrData.length;
   const totalOutreach = slSent + hrRequests;
   const totalReplies = slReplied + hrReplies;
   const replyRate = totalOutreach > 0 ? totalReplies / totalOutreach : 0;
@@ -83,23 +74,11 @@ export default function OverviewPage() {
         </PlatformSection>
       )}
 
-      {/* Google Ads Section */}
-      {(gaData.length > 0 || googleAds.isLoading) && (
-        <PlatformSection title="Google Ads" icon={BarChart3}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <MetricCard label="Impressions" value={formatNumber(gaImpressions)} loading={loading} />
-            <MetricCard label="Clicks" value={formatNumber(gaClicks)} icon={MousePointerClick} loading={loading} />
-            <MetricCard label="Conversions" value={formatNumber(gaConversions)} loading={loading} />
-            <MetricCard label="Ad Spend" value={formatCurrency(gaCost)} icon={DollarSign} loading={loading} />
-          </div>
-        </PlatformSection>
-      )}
-
       {/* No data state */}
       {!loading && totalCampaigns === 0 && (
         <div className="bg-white rounded-xl border p-12 text-center">
           <div className="flex items-center justify-center w-12 h-12 bg-emerald-50 rounded-full mx-auto mb-4">
-            <BarChart3 className="w-6 h-6 text-emerald-600" />
+            <Mail className="w-6 h-6 text-emerald-600" />
           </div>
           <h3 className="text-lg font-semibold mb-2">No campaigns configured yet</h3>
           <p className="text-[var(--color-muted-foreground)] max-w-md mx-auto">

@@ -13,7 +13,7 @@ export interface DateRange {
   to: string;
 }
 
-export type Platform = "smartlead" | "heyreach" | "google-ads";
+export type Platform = "smartlead" | "heyreach";
 
 export interface PlatformStatus {
   platform: Platform;

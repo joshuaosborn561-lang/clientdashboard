@@ -21,8 +21,6 @@ export async function GET() {
       smartleadCampaignIds: true,
       heyreachApiKey: true,
       heyreachCampaignIds: true,
-      googleAdsCustomerId: true,
-      googleAdsCampaignIds: true,
     },
     orderBy: { createdAt: "desc" },
   });
@@ -61,8 +59,6 @@ export async function POST(req: NextRequest) {
       smartleadCampaignIds: platformConfig.smartleadCampaignIds || null,
       heyreachApiKey: platformConfig.heyreachApiKey || null,
       heyreachCampaignIds: platformConfig.heyreachCampaignIds || null,
-      googleAdsCustomerId: platformConfig.googleAdsCustomerId || null,
-      googleAdsCampaignIds: platformConfig.googleAdsCampaignIds || null,
     },
   });
 

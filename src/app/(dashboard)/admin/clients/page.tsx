@@ -17,8 +17,6 @@ interface Client {
   smartleadCampaignIds: string | null;
   heyreachApiKey: string | null;
   heyreachCampaignIds: string | null;
-  googleAdsCustomerId: string | null;
-  googleAdsCampaignIds: string | null;
 }
 
 interface FormData {
@@ -30,15 +28,12 @@ interface FormData {
   smartleadCampaignIds: string;
   heyreachApiKey: string;
   heyreachCampaignIds: string;
-  googleAdsCustomerId: string;
-  googleAdsCampaignIds: string;
 }
 
 const emptyForm: FormData = {
   email: "", name: "", password: "", companyName: "",
   smartleadApiKey: "", smartleadCampaignIds: "",
   heyreachApiKey: "", heyreachCampaignIds: "",
-  googleAdsCustomerId: "", googleAdsCampaignIds: "",
 };
 
 export default function AdminClientsPage() {
@@ -123,8 +118,6 @@ export default function AdminClientsPage() {
       smartleadCampaignIds: client.smartleadCampaignIds || "",
       heyreachApiKey: client.heyreachApiKey || "",
       heyreachCampaignIds: client.heyreachCampaignIds || "",
-      googleAdsCustomerId: client.googleAdsCustomerId || "",
-      googleAdsCampaignIds: client.googleAdsCampaignIds || "",
     });
     setShowForm(true);
   }
@@ -190,14 +183,6 @@ export default function AdminClientsPage() {
                 </div>
               </div>
 
-              <div className="border-t pt-4">
-                <h4 className="text-sm font-semibold text-gray-700 mb-3">Google Ads Configuration</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <InputField label="Customer ID" value={form.googleAdsCustomerId} onChange={(v) => setForm({ ...form, googleAdsCustomerId: v })} placeholder="e.g. 1234567890" />
-                  <InputField label="Campaign IDs" value={form.googleAdsCampaignIds} onChange={(v) => setForm({ ...form, googleAdsCampaignIds: v })} placeholder="Comma-separated (empty = all)" />
-                </div>
-              </div>
-
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={resetForm} className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100">Cancel</button>
                 <button type="submit" className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg hover:opacity-90 text-sm font-medium">
@@ -238,7 +223,7 @@ export default function AdminClientsPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                   <PlatformBadge
                     label="SmartLead"
                     connected={!!client.smartleadApiKey}
@@ -254,11 +239,6 @@ export default function AdminClientsPage() {
                     showFull={showKeys[`hr-${client.id}`]}
                     fullValue={client.heyreachApiKey}
                     onToggle={() => setShowKeys(p => ({ ...p, [`hr-${client.id}`]: !p[`hr-${client.id}`] }))}
-                  />
-                  <PlatformBadge
-                    label="Google Ads"
-                    connected={!!client.googleAdsCustomerId}
-                    detail={client.googleAdsCustomerId || undefined}
                   />
                 </div>
               </div>
