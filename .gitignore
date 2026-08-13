@@ -33,3 +33,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 prisma/dev.db
+
+# consolidation PII — never commit
+load_suppression.sql
+suppression_hostile_2658.csv
