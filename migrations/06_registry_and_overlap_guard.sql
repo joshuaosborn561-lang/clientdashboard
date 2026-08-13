@@ -110,15 +110,15 @@ insert into _meta.retired_systems (name, retired_on, status, reason) values
   ('CRM automation',
    date '2026-08-12',
    'still_live_frozen',
-   'Supabase project klomihumrgwoixbzxypr. Paid, broken, leads frozen since 2026-07-22. Hostiles salvaged into campaignintelligence.public.suppression. Do not write. Do not export reply-management. Josh pauses or deletes from the dashboard after 7 days. Agent must not pause it.'),
+   'Supabase project klomihumrgwoixbzxypr. Paid, so pause via API was rejected. Hostiles salvaged into campaignintelligence.public.suppression. Do not write. Delete from the dashboard: Settings > General > Delete project. Confirm name CRM automation.'),
   ('agency-intel-sync',
    date '2026-08-12',
-   'delete_pending_token_unauthorized',
-   'Railway service ca287a58 in project 3fcadb86-beb3-458f-8565-8c1aeb98ea6c. Hourly 401. Injected RAILWAY_TOKEN cannot access this project. Josh deletes it in the Railway dashboard. Do not redeploy.'),
+   'deleted',
+   'Railway service ca287a58 in project 3fcadb86-beb3-458f-8565-8c1aeb98ea6c. Deleted 2026-08-13 with the project. Do not redeploy.'),
   ('agency-intel-web',
    date '2026-08-12',
-   'delete_pending_token_unauthorized',
-   'Railway service 30e196bb in the same project as agency-intel-sync. Delete with the sync worker. Do not touch smartlead-supabase-sync.')
+   'deleted',
+   'Railway service 30e196bb. Deleted 2026-08-13 with agency-intel-sync. Do not touch smartlead-supabase-sync.')
 on conflict (name) do update
   set retired_on = excluded.retired_on,
       status     = excluded.status,
