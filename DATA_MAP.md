@@ -21,7 +21,6 @@ The client is **Vasco** (Vasco Warranty), not Basco. Schema `client_basco` must 
 |---|---|---|
 | **campaignintelligence** | `azpapwtnrbzywlnxxecz` | **System of record.** Every sourced lead that reached a campaign. |
 | **google-maps-scraper-leads** | `kemvxzhcxvynmoutwdrh` | **Raw acquisition only.** Maps, parcels, permits, property-finder. Never campaign-aware. |
-| CRM automation | `klomihumrgwoixbzxypr` | **Retired / still live (paid).** Do not write. Delete from the dashboard — pause via API was rejected. |
 
 Do not create a third project. Do not write campaign or Smartlead data into the maps project. Do not write parcels or maps raw data into campaignintelligence.
 
@@ -126,7 +125,7 @@ The 15 Bolder + Goliath rows are competing cybersecurity offers hitting the same
 
 | Thing | Status | What Josh still does |
 |---|---|---|
-| CRM automation `klomihumrgwoixbzxypr` | Still live, frozen since 2026-07-22. Paid — cannot pause via API. | Delete from [Settings → General](https://supabase.com/dashboard/project/klomihumrgwoixbzxypr/settings/general#delete-project). Type the name `CRM automation`. |
+| CRM automation `klomihumrgwoixbzxypr` | **Deleted 2026-08-13** from the dashboard. | Do not recreate. |
 | Railway `agency-intel-sync` / `agency-intel-web` (`3fcadb86-…`) | **Deleted 2026-08-13.** Project `clientdatabase-agency-intel-sync` is gone. | Do not redeploy. |
 | `smartlead-supabase-sync` | Keeper. Left running. | Do not touch. |
 

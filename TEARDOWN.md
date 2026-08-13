@@ -1,6 +1,6 @@
 # Teardown Runbook — CRM automation
 
-**Status 2026-08-13 (later):** Salvage is done. Railway `agency-intel-sync`, `agency-intel-web`, and project `clientdatabase-agency-intel-sync` (`3fcadb86`) are **deleted**. Keeper `smartlead-supabase-sync` was left running. CRM automation is still live — it is paid, so pause via API was rejected. Delete it in the dashboard: https://supabase.com/dashboard/project/klomihumrgwoixbzxypr/settings/general#delete-project (confirm name `CRM automation`).
+**Status 2026-08-13:** Done. Railway agency-intel project is deleted. CRM automation was deleted from the dashboard. Keeper `smartlead-supabase-sync` was left running. Live data is campaignintelligence + google-maps-scraper-leads only.
 
 Canonical map: `DATA_MAP.md` and `_meta.*` on campaignintelligence.
 
